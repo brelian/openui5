@@ -93,7 +93,12 @@ sap.ui.define([
 	 * @param {boolean} async available only in QUnit v1.x. Indicates whether the test is asynchronous. False by default.
 	 */
 	function opaTest() {
-		callQUnit("test", arguments, function (assert, fnDone) {
+        var sQUnitFn = "test";
+        if (arguments && arguments[0] === "only") {
+            sQUnitFn = "only";
+            Array.prototype.shift.apply(arguments);
+        }
+        callQUnit(sQUnitFn, arguments, function (assert, fnDone) {
 			Opa._usageReport.opaEmpty();
 			resetOPA();
 			fnDone();
